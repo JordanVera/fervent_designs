@@ -14,7 +14,7 @@ const icons = {
 
 export default function ServicesPreview() {
   return (
-    <section className="py-24 bg-[#0e0c08]">
+    <section id="services" className="scroll-mt-24 py-24 bg-[#0e0c08]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.p

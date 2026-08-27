@@ -16,13 +16,13 @@ export default function Footer() {
                 alt={COMPANY.name}
                 width={120}
                 height={48}
-                className="h-10 w-auto object-contain"
+                className="h-24 w-auto object-contain"
                 unoptimized
               />
             </Link>
             <p className="text-sm leading-relaxed max-w-xs">
-              {COMPANY.tagline} Award-winning full-service wedding planning
-              and event design in Houston and destination weddings abroad.
+              {COMPANY.tagline} Award-winning full-service wedding planning and
+              event design in Houston and destination weddings abroad.
             </p>
             <SocialLinks />
           </div>
