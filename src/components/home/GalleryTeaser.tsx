@@ -3,13 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { GALLERY_IMAGES } from "@/lib/data";
+import { FEATURED_GALLERY_IMAGES, GALLERY_CATEGORIES } from "@/lib/data";
 import { ArrowRight } from "lucide-react";
 
 export default function GalleryTeaser() {
-  const images = GALLERY_IMAGES.filter(
-    (img) => "featured" in img && img.featured,
-  );
+  const images = FEATURED_GALLERY_IMAGES;
 
   return (
     <section className="py-24 px-6 lg:px-8 bg-background">
@@ -61,8 +59,9 @@ export default function GalleryTeaser() {
                 i === 0 || i === 4 ? "md:row-span-2" : ""
               }`}
             >
-              <div
-                className={`relative overflow-hidden ${
+              <Link
+                href="/gallery"
+                className={`relative block overflow-hidden ${
                   i === 0 || i === 4 ? "h-full min-h-[400px]" : "aspect-[4/3]"
                 }`}
               >
@@ -76,10 +75,11 @@ export default function GalleryTeaser() {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300" />
                 <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
                   <span className="text-white text-xs tracking-[0.2em] uppercase bg-black/60 px-3 py-1.5">
-                    {img.category}
+                    {GALLERY_CATEGORIES.find((cat) => cat.id === img.category)
+                      ?.label ?? img.category}
                   </span>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>

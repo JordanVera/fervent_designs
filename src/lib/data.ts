@@ -58,49 +58,106 @@ export const GALLERY_CATEGORIES = [
 
 export type GalleryCategory = (typeof GALLERY_CATEGORIES)[number]['id'];
 
-const weddingImages = Array.from({ length: 15 }, (_, i) => ({
-  id: i + 1,
-  src: `/gallery/weddings/${String(i + 1).padStart(2, '0')}.jpg`,
-  alt: `Fervent Designs wedding ${i + 1}`,
-  category: 'weddings' as const,
-}));
+export type GalleryImage = {
+  id: number;
+  src: string;
+  alt: string;
+  category: Exclude<GalleryCategory, 'all'>;
+  title?: string;
+  featured?: boolean;
+};
 
-const eventImages = Array.from({ length: 12 }, (_, i) => ({
-  id: 100 + i + 1,
-  src: `/gallery/events/${String(i + 1).padStart(2, '0')}.jpg`,
-  alt: `Fervent Designs featured event ${i + 1}`,
-  category: 'events' as const,
-}));
+const FEATURED_WEDDING_NUMBERS = new Set([1, 2, 8]);
+const FEATURED_EVENT_NUMBERS = new Set([8]);
 
-const videoImages = [
+const homeImages: GalleryImage[] = [
+  {
+    id: 301,
+    src: '/gallery/home-01.jpg',
+    alt: 'Destination wedding ceremony on a tropical oceanfront deck',
+    category: 'weddings',
+    featured: true,
+  },
+  {
+    id: 303,
+    src: '/gallery/home-03.jpg',
+    alt: 'Bride with a blush bouquet in a beaded gown and crown',
+    category: 'weddings',
+    featured: true,
+  },
+];
+
+const weddingImages: GalleryImage[] = Array.from({ length: 15 }, (_, i) => {
+  const n = i + 1;
+  return {
+    id: n,
+    src: `/gallery/weddings/${String(n).padStart(2, '0')}.jpg`,
+    alt: `Fervent Designs wedding ${n}`,
+    category: 'weddings' as const,
+    featured: FEATURED_WEDDING_NUMBERS.has(n),
+  };
+});
+
+const eventImages: GalleryImage[] = Array.from({ length: 12 }, (_, i) => {
+  const n = i + 1;
+  return {
+    id: 100 + n,
+    src: `/gallery/events/${String(n).padStart(2, '0')}.jpg`,
+    alt: `Fervent Designs featured event ${n}`,
+    category: 'events' as const,
+    featured: FEATURED_EVENT_NUMBERS.has(n),
+  };
+});
+
+const videoImages: GalleryImage[] = [
   {
     id: 201,
     src: '/gallery/videos/01.jpg',
     alt: 'Nyelle & Jared Highlight Video',
-    category: 'videos' as const,
+    category: 'videos',
     title: 'Nyelle & Jared Highlight Video',
   },
   {
     id: 202,
     src: '/gallery/videos/02.jpg',
     alt: 'Myriam & MJ Wedding Teaser',
-    category: 'videos' as const,
+    category: 'videos',
     title: 'Myriam & MJ Wedding Teaser',
   },
   {
     id: 203,
     src: '/gallery/videos/03.jpg',
     alt: 'Ambriana and Jeffery Highlight',
-    category: 'videos' as const,
+    category: 'videos',
     title: 'Ambriana & Jeffery Highlight',
   },
 ];
 
-export const GALLERY_IMAGES = [
+export const GALLERY_IMAGES: GalleryImage[] = [
+  ...homeImages,
   ...weddingImages,
   ...eventImages,
   ...videoImages,
 ];
+
+const FEATURED_TEASER_SRCS = [
+  '/gallery/home-01.jpg',
+  '/gallery/weddings/08.jpg',
+  '/gallery/home-03.jpg',
+  '/gallery/events/08.jpg',
+  '/gallery/weddings/02.jpg',
+  '/gallery/weddings/01.jpg',
+] as const;
+
+export const FEATURED_GALLERY_IMAGES: GalleryImage[] = FEATURED_TEASER_SRCS.map(
+  (src) => {
+    const image = GALLERY_IMAGES.find((item) => item.src === src);
+    if (!image) {
+      throw new Error(`Missing featured gallery image: ${src}`);
+    }
+    return image;
+  },
+);
 
 export const SERVICES = [
   {
