@@ -80,9 +80,20 @@ export default function AboutPage() {
               </p>
             ))}
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <div className="relative aspect-video w-full overflow-hidden bg-black shadow-[0_24px_60px_-24px_rgba(14,12,8,0.35)]">
+              <iframe
+                src={ABOUT_CONTENT.storyVideoEmbedUrl}
+                title={ABOUT_CONTENT.storyVideoLabel}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
               <Link
-                href="/#services"
+                href="/services"
                 className="inline-flex justify-center px-8 py-3.5 bg-[#ee85d4] text-black text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#f5a8e8] transition-colors duration-200"
               >
                 View Our Offerings
